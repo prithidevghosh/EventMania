@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/css/header.css">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img
+                src="https://s.tmimgcdn.com/scr/1200x750/246900/tech-event-logo--letter-te-logo_246916-original.jpg"
+                height="50em" width="80em" alt="Company Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/events">Events</a>
+                </li>
+                <% if(locals.user) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/signOut">SignOut</a>
+                    </li>
+                    <%}else{%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/signIn">Signin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/signUp">Signup</a>
+                        </li>
+                        <%}%>
+            </ul>
+        </div>
+    </div>
+</nav>

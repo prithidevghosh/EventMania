@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="/css/eventpage.css">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="btn-group mb-3">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Filter Events
+                </button>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/events/filter/computer science">Computer Science</a>
+                    <a class="dropdown-item" href="/events/filter/electrical">Electrical</a>
+                    <a class="dropdown-item" href="/events/filter/mechanical">Mechanical</a>
+                    <a class="dropdown-item" href="/events/filter/production">Production</a>
+                </div>
+            </div>
+            <% if (userrole=="admin" ){%>
+                <button id="add_event" class="btn btn-primary" type="button" data-toggle="collapse"
+                    data-target="#event-form" aria-expanded="false" aria-controls="event-form">
+                    Add Event
+                </button>
+                <%}%>
+
+                    <div class="collapse" id="event-form">
+                        <div class="card card-body">
+                            <form action="/events/create" method="post">
+                                <div class="form-group">
+                                    <label for="event-title">Event Title</label>
+                                    <input type="text" class="form-control" name="title" id="event-title"
+                                        placeholder="Enter event title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-description">Event Description</label>
+                                    <textarea class="form-control" id="event-description" rows="3"
+                                        placeholder="Enter event description" name="description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="start-time">Start Time</label>
+                                    <input type="datetime-local" class="form-control" id="start-time"
+                                        placeholder="Enter start time" name="starttime">
+                                </div>
+                                <div class="form-group">
+                                    <label for="total-registration">Total Registration</label>
+                                    <input type="number" class="form-control" id="total-registration"
+                                        placeholder="Enter total registration" name="participants">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-department">Department</label>
+                                    <select class="form-control" name="department" id="event-department" required>
+                                        <option value="">Select Department</option>
+                                        <option value="computer science">Computer Science</option>
+                                        <option value="electrical">Electrical</option>
+                                        <option value="mechanical">mechanical</option>
+                                        <option value="production">production</option>
+                                    </select>
+                                    <input type="text" class="form-control" name="title" id="event-department-hidden"
+                                        placeholder="Enter Department" disabled style="display:none">
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <%for (event of events){%>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="https://cdn.pixabay.com/photo/2017/12/08/11/53/event-party-3005668__340.jpg"
+                            class="card-img-top" alt="Event Image">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= event.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= event.description%>
+                            </p>
+                            <%if (userrole=="student" ){%>
+                                <% if(event.participants>10){ %>
+                                    <h5 style="color: red;">Participation full</h5>
+                                    <%}else{%>
+                                        <a href="/events/register/<%=event.id%>/<%=locals.user.id%>"
+                                            class="btn btn-primary">Register</a>
+                                        <%}%>
+                                            <%}%>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Start Time:</strong>
+                                <%= event.starttime %>
+                            </li>
+                            <li class="list-group-item"><strong>Total Registration:</strong>
+                                <%= event.participants %>
+                            </li>
+                            <li class="list-group-item"><strong>Department:</strong>
+                                <%= event.department %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>
+
+
+</div>
