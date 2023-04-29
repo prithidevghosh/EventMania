@@ -70,7 +70,9 @@
         <div class="row">
             <%for (event of events){%>
                 <div class="col-md-4 mb-4">
+
                     <div class="card">
+
                         <img src="https://cdn.pixabay.com/photo/2017/12/08/11/53/event-party-3005668__340.jpg"
                             class="card-img-top" alt="Event Image">
                         <div class="card-body">
@@ -84,10 +86,15 @@
                                 <% if(event.participants>10){ %>
                                     <h5 style="color: red;">Participation full</h5>
                                     <%}else{%>
-                                        <a href="/events/register/<%=event.id%>/<%=locals.user.id%>"
-                                            class="btn btn-primary">Register</a>
-                                        <%}%>
-                                            <%}%>
+                                        <%=console.log(event.users.length)%>
+                                            <% if(event.users.includes(locals.user.id)){%>
+                                                <strong style="color: blue;">Already Registered</strong>
+                                                <%}else{%>
+                                                    <a href="/events/register/<%=event.id%>/<%=locals.user.id%>"
+                                                        class="btn btn-primary">Register</a>
+                                                    <%}%>
+                                                        <%}%>
+                                                            <%}%>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Start Time:</strong>
@@ -100,6 +107,10 @@
                                 <%= event.department %>
                             </li>
                         </ul>
+                        <%if(userrole=="admin"){%>
+                            <button class="btn btn-danger"><a href="/events/delete/<%=event.id%>">Delete</a></button>
+                            <%}%>
+
                     </div>
                 </div>
                 <%}%>
@@ -108,3 +119,13 @@
 
 
 </div>
+
+<script>
+    function deleteItem() {
+        // Perform deletion logic here
+        // ...
+
+        // Redirect to home page
+        window.location.href = '/events/delete';
+    }
+</script>

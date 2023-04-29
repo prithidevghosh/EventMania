@@ -39,7 +39,7 @@ module.exports.createUser = async (req, res) => {
 
 module.exports.createSession = async (req, res) => {
 
-    return res.redirect('/');
+    return res.redirect('/events');
 }
 
 module.exports.destroySession = (req, res) => {

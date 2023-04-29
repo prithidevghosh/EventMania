@@ -4,10 +4,12 @@ module.exports.eventPage = async (req, res) => {
     try {
         console.log(res.locals.user.role);
         const eventFetchedDb = await Event.find({});
+        const userFetchedDb = await User.find({});
         if (eventFetchedDb) {
             return res.render('event', {
                 events: eventFetchedDb,
-                userrole: res.locals.user.role
+                userrole: res.locals.user.role,
+
             });
         }
     } catch (error) {
@@ -49,12 +51,25 @@ module.exports.handleRegistration = async (req, res) => {
         if (eventFetchedDb) {
             const num = eventFetchedDb.participants;
             eventFetchedDb.participants = num + 1;
-            eventFetchedDb.save();
+            const finalres = await eventFetchedDb.save();
             const userFetchedDb = await User.findById(req.params.id2);
-            console.log(userFetchedDb);
+            console.log(userFetchedDb.id);
+
+            eventFetchedDb.users.push(userFetchedDb.id);
+            const res = await eventFetchedDb.save();
 
         }
         return res.redirect('back')
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports.deleteEvent = async (req, res) => {
+    try {
+
+        const eventFetchedDb = await Event.findByIdAndDelete(req.params.id);
+        return res.redirect('back');
     } catch (error) {
         console.log(error);
     }
