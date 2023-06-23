@@ -89,6 +89,8 @@
                                         <%=console.log(event.users.length)%>
                                             <% if(event.users.includes(locals.user.id)){%>
                                                 <strong style="color: blue;">Already Registered</strong>
+                                                <a href="/events/deregister/<%=event.id%>/<%=locals.user.id%>"
+                                                    class="btn btn-danger">Cancel Registration</a>
                                                 <%}else{%>
                                                     <a href="/events/register/<%=event.id%>/<%=locals.user.id%>"
                                                         class="btn btn-primary">Register</a>
